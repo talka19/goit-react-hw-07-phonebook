@@ -11,9 +11,7 @@ import { fetchContacts } from 'redux/operations';
 
 export const App = () => {
   const dispatch = useDispatch();
-  // const isLoading = useSelector(selectorIsLoading);
   const contacts = useSelector(shownContacts);
-  console.log('contacts', contacts)
   
   useEffect(()=> {
     dispatch(fetchContacts());

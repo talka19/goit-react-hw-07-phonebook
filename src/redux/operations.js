@@ -5,7 +5,6 @@ import * as mockaApi from 'service/mockapi'
 export const fetchContacts = createAsyncThunk("contacts/fetchContacts", async (_, thunkAPI) => {
     try {
         const contacts = await mockaApi.fetchContacts();
-        console.log('contacts', contacts)
         return contacts;
     } catch (e) {
         return thunkAPI.rejectWithValue(e.message); 

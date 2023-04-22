@@ -25,7 +25,7 @@ export const contacts = createSlice({
     error: null,
   },
 
-  extrareducers: {
+  extraReducers: {
       [fetchContacts.pending]: handlePending,
       [fetchContacts.fulfilled]:(state, action) => {
         state.items = action.payload;
@@ -49,4 +49,4 @@ export const contacts = createSlice({
     },
   })
 
-  console.log('contacts', contacts)
+ 

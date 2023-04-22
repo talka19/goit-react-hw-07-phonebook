@@ -13,4 +13,3 @@ export const shownContacts = createSelector(
     (contacts, filterValue) =>
       contacts.filter(contact => contact.name.toLowerCase().includes(filterValue))
 );
-console.log('state', shownContacts)
