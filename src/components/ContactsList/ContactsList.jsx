@@ -1,34 +1,29 @@
-import {deleteContact} from 'redux/contactsSlice'
 import { useDispatch, useSelector } from 'react-redux';
-import {ListedItem,ItemContact, ContactItem, BtnItem} from 'components/ContactsList/ContactsList.styled';
-import toast from 'react-hot-toast';
+import { ListedItem, ItemContact, ContactItem, BtnItem } from 'components/ContactsList/ContactsList.styled';
+import { deleteContact } from 'redux/operations';
+import { selectorIsLoading, shownContacts } from 'redux/selectors';
 
-export const ContactList = () => {
+export const ContactList = ({id, name}) => {
 
-    const contacts = useSelector(state=>state.contacts.contacts)
-    const filter = useSelector(state => state.contacts.filter)
+    const contacts = useSelector(shownContacts);
+    console.log('1',contacts );
+    const isLoading = useSelector(selectorIsLoading);
     const dispatch = useDispatch();
 
-    const normalizedFilter = filter.toLowerCase();
-    const filteredContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizedFilter)
-    );
-
-       
-    const deleteContactId = id => {
-        dispatch(deleteContact(id));
-        toast.success('Successfully deleted!');
+    const onClick = () => {
+        dispatch(deleteContact({id, name}));
     };
 
    return( 
       <ListedItem>
-          {filteredContacts.map(({id, name,number}) => {
+          {isLoading && <p>Loading...</p>}
+          {contacts.map(({id, name,number}) => {
         return (
         <ItemContact key={id}>
             <ContactItem>
                 {name}: {number}
             </ContactItem>
-            <BtnItem type='submit' onClick={()=> deleteContactId(id)}> Delete </BtnItem>
+            <BtnItem type='submit' onClick={onClick}> Delete </BtnItem>
         </ItemContact>
         );
     })}

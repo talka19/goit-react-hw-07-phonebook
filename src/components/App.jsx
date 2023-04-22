@@ -3,11 +3,21 @@ import {ContactForm} from './ContactForm/ContactForm';
 import Filter from 'components/Filter/Filter';
 import {TitleContacts, AllContacts} from 'components/App.styled';
 import { Toaster } from 'react-hot-toast';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { shownContacts } from 'redux/selectors';
+import { fetchContacts } from 'redux/operations';
 
 
 export const App = () => {
-  const contacts = useSelector(state =>state.contacts);
+  const dispatch = useDispatch();
+  // const isLoading = useSelector(selectorIsLoading);
+  const contacts = useSelector(shownContacts);
+  console.log('contacts', contacts)
+  
+  useEffect(()=> {
+    dispatch(fetchContacts());
+  }, [dispatch]);
 
   return (
         <div
@@ -33,8 +43,9 @@ export const App = () => {
         <h1>Phonebook</h1>
         <ContactForm />
         <TitleContacts>Contacts</TitleContacts>
-        <AllContacts>All contacts: {contacts.contacts.length}</AllContacts>
+        <AllContacts>All contacts: {contacts.length}</AllContacts>
         <Filter />
+        {/* {isLoading && <b>Loading ...</b>} */}
         <ContactList />
         </div>
       )
